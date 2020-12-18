@@ -31,7 +31,7 @@ for topic, msg, t in rosbag.Bag(sys.argv[1]).read_messages():
 
 
 for timestamp, image_color, image_depth in tqdm(zip(
-        timestamp_list, image_color_list, image_depth_list)):
+        timestamp_list, image_color_list, image_depth_list), total=len(timestamp_list)):
     t = timestamp.to_nsec()
     cv2.imwrite(
         'data/color/color{:012}.jpg'.format(t),
@@ -49,4 +49,4 @@ for timestamp, image_color, image_depth in tqdm(zip(
         rgbd_image,
         o3d.camera.PinholeCameraIntrinsic(
             o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault))
-    o3d.io.write_point_cloud('data/pcd/pcd{:012}.ply'.format(t), pcd)
+    o3d.io.write_point_cloud('data/pcd/pcd{:012}.pcd'.format(t), pcd)
